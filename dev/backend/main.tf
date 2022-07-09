@@ -11,7 +11,7 @@ terraform {
   }
 }
 
-module "terraform_state_dev_bucket" {
+module "terraform_state_bucket" {
   source                  = "terraform-aws-modules/s3-bucket/aws"
   version                 = "3.3.0"
   bucket                  = "terraform-state-dev-596964673232"
@@ -32,14 +32,14 @@ module "terraform_state_dev_bucket" {
 }
 
 resource "aws_s3_bucket_ownership_controls" "example" {
-  bucket = module.terraform_state_dev_bucket.s3_bucket_id
+  bucket = module.terraform_state_bucket.s3_bucket_id
 
   rule {
     object_ownership = "BucketOwnerEnforced"
   }
 }
 
-module "terraform_state_dev_lock_table" {
+module "terraform_state_lock_table" {
   source   = "terraform-aws-modules/dynamodb-table/aws"
   version  = "2.0.0"
   name     = "terraform-state-dev-lock-table"
